@@ -1,0 +1,35 @@
+\documentclass[
+    pdftex,
+    fontsize=11pt,
+    a4paper
+   ]{scrbook}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish, es-tabla]{babel}
+
+\usepackage[a4paper,includeall,bindingoffset=0cm,left=3cm,right=2cm,
+			top=2cm, bottom=2cm,marginparsep=0cm,marginparwidth=0cm]{geometry}
+%\usepackage{a4wide}
+
+% Para formatear bien urls largas
+\usepackage{url}
+
+% Para tablas copadas
+\usepackage{tabu}
+
+% Para números con unidades
+\usepackage{siunitx}
+\sisetup{output-decimal-marker = {,}}
+% Ejemplo: \SI{13,56}{\mega\hertz} \si{\centi\meter}
+
+% Para inserción de imágenes
+\usepackage{graphicx}
+
+% Para el símbolo de número (N^{0})
+\usepackage{textcomp}
+
+\begin{document}
+
+\input{TitlePageCaratula.tex}
+
+\end{document}

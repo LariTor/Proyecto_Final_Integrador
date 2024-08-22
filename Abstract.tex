@@ -1,0 +1,43 @@
+\newenvironment{abstract}{
+	\cleardoublepage \null \vfill 
+	\begin{center}
+		\bfseries 
+		\abstractname 
+	\end {center}
+}%
+{\vfill \null}
+
+
+\begin{abstract}
+
+En el presente trabajo se comenzará realizando una breve introducción 
+a los sistemas de identificación por radiofrecuencia. Luego se 
+analizará detalladamente el estándar ISO/IEC 14443, enfocando el 
+estudio a la interfaz de comunicación tipo A. A continuación se 
+presentará el diseño de un circuito integrado que cumplirá el rol de 
+\emph{transponder} y que será implementado en un proceso CMOS 
+estándar de \SI{0.5}{\micro\meter}.
+
+Para el diseño del circuito integrado se comenzará por analizar en 
+profundidad el vínculo existente entre lector y transponder, lo que 
+permitirá entender el proceso de traspaso de energía e información y 
+se verán las distintas implementaciones posibles. Luego se 
+desarrollará un modelo basado en la extracción de parámetros de la 
+estructura física de las antenas, que permitirá verificar los 
+resultados analíticos y realizar simulaciones mediante SPICE de 
+los circuitos, estando éstos conectados a un modelo realista de la 
+antena.
+
+El circuito integrado contará con diseño analógico y digital, este 
+último sintetizado a partir de código RTL. Se tratará entonces de un 
+dispositivo de señal mixta por lo que se deberán compatibilizar ambos 
+dominios. Se mostrará el diseño digital junto con su verificación 
+funcional a nivel de compuerta y el diseño analógico con las 
+simulaciones realizadas.
+
+Finalmente se cerrará el trabajo con los detalles de la 
+implementación del dispositivo en el proceso de fabricación CMOS y la 
+verificación de su funcionamiento.
+
+\end{abstract}
+

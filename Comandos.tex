@@ -1,0 +1,23 @@
+% Comandos agregados
+
+\newcommand{\signature}[7]{
+	\vfill
+
+	\begin{flushright}
+		#1, \today
+	\end{flushright}
+	\vspace{3cm}
+
+	\noindent
+	\centering
+	\begin{tabularx}{0.9\textwidth}{cXc}
+		\multicolumn{3}{c}{\rule{5cm}{1pt}}\\
+		\multicolumn{3}{c}{#2}\\
+		\multicolumn{3}{c}{#3}\\
+		\vspace{3cm}\\
+		\rule{5cm}{1pt} & \hspace{2.5cm} & \rule{5cm}{1pt} \\
+		#4 & ~ & #5 \\
+		#6 & ~ & #7
+	\end{tabularx}
+	\vspace{1cm}
+}

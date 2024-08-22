@@ -1,0 +1,190 @@
+\documentclass[11pt, a4paper, twoside, openright]{book}
+\synctex=1
+
+% \includeonly{Conclusiones}
+
+% \usepackage{layout}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[spanish, es-tabla]{babel}
+\usepackage{babelbib}
+%\usepackage{a4wide}
+
+% Para formatear bien urls largas
+\usepackage{url}
+
+% Para tener subfigures
+\usepackage{caption}
+\usepackage{subcaption}
+
+% Para inserción de imágenes
+\usepackage{graphicx}
+\graphicspath{{./img/}}
+
+% Para los headers copados
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% Tablas copadas
+\usepackage{tabularx}
+\usepackage{tabulary}
+\usepackage{tabu}
+\usepackage{booktabs}
+
+% Ajuste de texto profesional
+\usepackage{microtype}
+
+% Para números con unidades
+\usepackage{siunitx}
+\sisetup{output-decimal-marker = {,}}
+% Ejemplo: \SI{13,56}{\mega\hertz} \si{\centi\meter}
+
+% Cosas matemáticas
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Formato de los captions
+\usepackage[labelfont=bf,textfont=sf,font=small]{caption}
+
+% Agrega \sfrac{}{}
+\usepackage{xfrac}
+
+% Notas al costado
+\usepackage{todonotes}
+
+% Para hacer celdas de varias filas
+\usepackage{multirow}
+
+% Para definir columnas con \begin{multicols}{2}...
+%\usepackage{multicol}
+
+% Para hacer plots copados
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.5}
+
+% Para dibujar circuitos
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage[american currents, american voltages]{circuitikz}
+
+% Para incluir código
+\usepackage{listings}
+\lstset{% the size of the fonts that are used for the code
+	basicstyle=\ttfamily,
+	breaklines=true,
+	breakatwhitespace=true
+} 
+
+% Para incluir paginas en pdf
+\usepackage{pdfpages}
+
+% Para linkerar referencias
+%\usepackage{hyperref}
+
+\input{Comandos.tex}
+
+\title{
+	{\normalsize
+		Universidad de Buenos Aires\\
+		Facultad de Ingeniería -- Departamento de Electrónica\\
+		Tesis de Ingeniería Electrónica\\
+		\vspace{0.7cm}
+	}
+	Diseño de un Circuito Integrado CMOS para Identificación por 
+	Radiofrecuencia basado en el Estándar ISO-14443
+}
+\author{
+	Fabricio P. Alcalde Bessia\\
+	Padrón \#86296\\
+	\texttt{f@lcald.com.ar}
+	\and
+	Dr. Ing. José Lipovetzky\\
+	Prof. Adjunto\\
+	\texttt{joselipo@gmail.com}
+	\and
+	Ing. Octavio Alpago\\
+	JTP. Interino\\
+	\texttt{oalpago@yahoo.com.ar}
+}
+\date{\today}
+
+%\pagestyle{fancy}
+%\lhead{}
+%\chead{}
+%\rhead{}
+%\lfoot{}
+%\cfoot{
+%	{\footnotesize
+%	\emph{Diseño de un Circuito Integrado CMOS para Identificación por 
+%		Radiofrecuencia basado en el Estándar ISO-14443}\\
+%	Plan de Tesis -- Página \thepage\ de \pageref{LastPage}
+%	}
+%}
+%\rfoot{}
+%\renewcommand{\headrulewidth}{0pt}
+%\renewcommand{\footrulewidth}{0.4pt}
+
+\begin{document}
+\frontmatter
+
+% Imprime un par de paginas con las medidas del documentos
+% \layout
+
+% \maketitle{}
+\includepdf{caratula/caratula.pdf}
+% \input{./caratula/TitlePageCaratula.tex}
+
+%\thispagestyle{empty}
+
+\input{Agradecimientos.tex}
+
+\input{Abstract.tex}
+
+\tableofcontents
+%\listoffigures
+%\listoftables
+
+\mainmatter
+
+% Somera introducción a RFID. Por que es importante, como funciona, que 
+% tipos existen, que define el estándar, etc.. 
+\include{Introduccion}
+
+% Principios físicos. Leyes físicas, acoplamiento inductivo, modelo de las 
+% antenas, dependencia de k, L1, L2, como se mide en el estándar... 
+% \include{PrincFisicos}
+
+% Diagrama en bloques del CI, explicación de cada una de las partes, 
+% explicación de por que no es un chip completo y cuál fue la idea esta 
+% implementación, funcionamiento teórico, detalles de la implementación 
+% relacionados al proceso CMOS (Puente de diodos)
+\include{DisenioCI}
+
+% Funcionamiento de la interfaz inductiva.
+\include{InterfazInductiva}
+
+% Diseño digital. Introducción, explicación del protocolo, arquitectura del 
+% chip, microarquitectura de cada bloque, simulación, biblioteca estándar 
+% utilizada, síntesis y place and route.
+\include{Digital}
+
+% Diseño Analógico. Introducción, características de las señales según el 
+% estándar, arquitectura del circuito, acondicionamiento de la energía 
+% (rectificadores, regulador, Iref), detector de envolvente, extracción de 
+% reloj y POR. Simulaciones, mediciones.
+\include{Analogico}
+
+% Resultados Obtenidos. Bancos de medición según ISO10373, resultados, 
+% verificación de la lógica y conclusiones.
+\include{Resultados}
+
+% Capitulo con las conclusiones
+\include{Conclusiones}
+
+\backmatter
+
+\input{Bibliografia.tex}
+
+%\appendix
+
+\end{document}

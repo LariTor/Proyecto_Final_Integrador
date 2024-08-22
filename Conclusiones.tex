@@ -1,0 +1,144 @@
+% Capítulo con las conclusiones.
+\chapter{Conclusiones}
+
+A lo largo del trabajo se dio un panorama general del tema de 
+identificación por radiofrecuencia, en particular se estudió el 
+estándar ISO/IEC 14443, en su versión de comunicación tipo A; se 
+analizó en detalle la interfaz inductiva de transmisión de datos y 
+energía, y se diseño e implementó en silicio un circuito integrado 
+que permite enviar y recibir datos según lo indica la norma y que se 
+alimenta directamente de la señal de radiofrecuencia captada por la 
+antena.
+
+El estándar ISO/IEC 14443--A define una comunicación dentro de todo 
+simple que es utilizada por una gran cantidad de dispositivos 
+comerciales. Para el conjunto de los dispositivos pasivos, que toman 
+su alimentación de la portadora enviada por el lector, el hecho de que 
+el mismo lector produzca pausas en la señal para enviar información 
+es un tema que complica el diseño, ya que se debe contemplar una 
+falta de energía al mismo tiempo que se recibe información. Existen 
+otras formas de transmisión que no dejarían a los transponders sin 
+energía, como por ejemplo una modulación de amplitud del 10\%, como 
+se define en la versión B de la misma norma. Sin embargo, como se 
+mostró a lo largo del trabajo una modulación ASK 100\% es muy fácil 
+de demodular y además es posible almacenar energía para utilizar en 
+las pausas y al mismo tiempo reducir el consumo cuando se está en una 
+de ellas.
+
+En cuanto al acoplamiento inductivo, en el capítulo 
+\ref{cap:AcoplamientoInductivo} se realizó un análisis en profundidad 
+del vínculo existente entre lector y transponder. Mediante un modelo 
+simple se analizó la dependencia de la tensión inducida en la antena 
+del transponder desde un punto de vista circuital. Para ello se 
+realizó la extracción de parámetros del arreglo dado por la norma 
+ISO/IEC 10373--6 junto con la antena que había sido utilizada en 
+experiencias previas, lo que sirvió como punto de partida para el 
+análisis a partir de datos concretos. Gracias al análisis se pudo 
+diferenciar dos circuitos posibles de antena, con y sin capacidad en 
+resonancia, y se pudo decidir uno por sobre el otro. 
+
+La transmisión de datos por modulación de carga se analizó también 
+desde el punto de vista circuital, utilizando para ello el arreglo de 
+antenas para la medición de la amplitud de modulación dado por el 
+estándar. El requisito era obtener una cierta amplitud de modulación 
+a la salida del arreglo, por lo tanto se desarrolló un modelo del 
+mismo que incluyó la extracción de los coeficientes de acoplamiento, 
+inductancias y resistencias de la estructura. Gracias a ese modelo se 
+pudo observar la amplitud de modulación obtenida variando diferentes 
+tipos de carga y luego decidir el uso de modulación capacitiva. 
+
+El diseño de la antena del transponder resultó adecuado para su uso, 
+sin embargo no está optimizada su forma para obtener el mayor factor 
+de acoplamiento posible. Para ello hubiese sido una buena idea 
+utilizar alguna herramienta de calculo de campos tridimensionales por 
+elementos finitos, de forma tal de poder mejorar el flujo concatenado.
+
+En cuanto al sistema digital, gracias a las celdas estándar 
+desarrolladas por la \emph{Oklahoma State University} se pudo 
+describir el diseño en RTL y sintetizarlo e implementarlo con las 
+herramientas de \emph{Synopsys Inc.}. Sin embargo, el hecho de ser un 
+dispositivo de señal mixta trajo algunas complicaciones en el manejo 
+de las herramientas, que no son del todo compatibles.
+
+Uno de los puntos cruciales en el diseño fue la recepción de 
+información a través del muestreo de la señal \lstinline{pause}. La 
+dificultad residía en que al recibir una pausa esta debía ser 
+muestreada, sin embargo en ese instante el reloj del sistema digital 
+se encontraba congelado y por lo tanto todo el sistema digital estaba 
+inactivo. Este problema se resolvió exitosamente mediante el agregado 
+de un pequeño circuito asincrónico que retenía la señal 
+\lstinline{pause} hasta que esta pudiese ser leída al retornar la 
+portadora y comenzar a oscilar nuevamente el reloj.
+
+La transmisión y recepción de las tramas con información también 
+resultaron exitosas. Se pudieron enviar y recibir los 256 bytes 
+posibles utilizando el conexionado de eco y de esta forma comprobar 
+el funcionamiento del sistema completo de forma independiente. Las 
+interfaces de entrada y salida digitales, para enviar y recibir datos, 
+resultaron muy convenientes por estar diseñadas de forma simétrica, 
+para ser conectadas directamente una con la otra.
+
+La verificación del funcionamiento de los bloques digitales llevó una 
+gran parte del trabajo realizado. Todos los módulos fueron probados 
+por separado y luego se desarrollaron una serie de \emph{tasks} que 
+permitieron enviar tramas completas a todo el conjunto. La recepción 
+de datos fue verificada de forma automática a través de un 
+\emph{testbench} autocontenido. Por otra parte, la verificación de la 
+transmisión de datos fue realizada manualmente, analizando el diagrama 
+temporal de las entradas y salidas. Completar el \emph{testbench} para 
+hacerlo totalmente automatizado puede ser un gran avance para 
+desarrollos futuros.
+
+En cuanto al diseño analógico, el regulador/limitador de tensión 
+funcionó, en principio, correctamente. En las mediciones realizadas se 
+sabe que el nivel de campo es alto debido a la amplitud de la tensión 
+inducida, sin embargo no se sabe exactamente cuál es su valor. Tampoco 
+fue posible verificar el funcionamiento del regulador/limitador con el 
+campo máximo dado por la norma debido a la dificultad de lograr un 
+campo magnético de esa magnitud y frecuencia. Sin embargo las 
+mediciones realizadas sirvieron para comprobar aunque sea que el 
+circuito está operativo.
+
+Para alimentar los distintos bloques del circuito integrado se 
+utilizó la tensión rectificada por un rectificador de onda completa y 
+filtrada por un capacitor MOS de gran valor trabajando en acumulación. 
+La capacidad obtenida permitió superar las pausas sin inconvenientes, 
+gracias también a que el consumo del bloque digital en esos instantes 
+fue despreciable. La reducción del consumo se logró generando la 
+señal de reloj a partir de la misma portadora. De esta forma al 
+arribar una pausa el sistema digital quedaba congelado, pero su 
+consumo se reducía drásticamente.
+
+La inicialización del sistema digital a través del bloque 
+\emph{Power-on Reset} funcionó correctamente, así como también el 
+detector de pausas y el bloque modulador de carga.
+
+Finalmente los resultados del dispositivo funcionando en modo eco, y 
+respondiendo a los 256 bytes posibles fueron todo un éxito. Luego de 
+esa prueba satisfactoria puede decirse que se tiene un transponder 
+capaz de \emph{obtener su energía del campo magnético generado por el 
+lector}, \emph{detectar y decodificar los símbolos recibidos} e 
+\emph{identificar los datos dentro de las tramas}. Además, es capaz de 
+\emph{encapsular datos en una trama estándar}, \emph{codificar los 
+bits}, \emph{modularlos con la subportadora}, para luego 
+\emph{enviarlos hacia el lector mediante modulación de carga}.
+
+La descripción y los resultados del trabajo fueron publicados en el 
+\emph{Congreso Argentino de Micro--nano--electrónica Tecnología y 
+Aplicaciones} (EAMTA) 2014. El trabajo fue aceptado para ser publicado 
+en \emph{IEEE Xplore} con número ISBN.
+
+En cuanto a trabajos futuros, en principio la construcción de un 
+lector que sea capaz de generar el campo máximo indicado en la norma 
+sería un gran desafío. Por otro lado, se podría hacer una análisis más 
+detallado de la antena, optimizando su diseño y dimensiones para 
+mejorar el coeficiente de acoplamiento con el lector. Sino, otro trabajo 
+interesante sería implementar el protocolo anti-colisión, el 
+estándar completo, o bien desarrollar algún tipo de sensor con 
+comunicación ISO/IEC 14443--A. Cabe destacar que el trabajo aquí 
+desarrollado puede utilizarse como bloque IP (\emph{intellectual 
+property}) para el desarrollo de numerosos dispositivos que utilicen 
+como medio de comunicación la interfaz definida por el estándar. 
+Puede tratarse de sensores autónomos, tarjetas de identificación o 
+cualquier tipo de elemento que deba devolver su información cuando el 
+lector la requiera.
